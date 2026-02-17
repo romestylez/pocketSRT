@@ -112,7 +112,7 @@ PocketSRT (Haupt-Handy)
 ## 🎯 Kompatible SRTLA Server
 
 PocketSRT funktioniert mit Standard SRT(LA)-Servern, z.B.:
-- [irl-srt-server](hhttps://github.com/irlserver/irl-srt-server/)
+- [irl-srt-server](https://github.com/irlserver/irl-srt-server)
 - [srtla-live-server](https://github.com/OpenIRL/srt-live-server/)
 - Eigener Server
 
