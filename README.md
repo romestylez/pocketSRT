@@ -49,7 +49,7 @@ PocketSRT enthält einen eingebetteten RTMP-Server. Die **RTMP URL** wird direkt
 
 **Option A – DJI Auto-Connect (empfohlen für DJI Kameras):**
 1. Menü (☰) → **DJI Settings** öffnen
-2. WLAN-Zugangsdaten der Kamera eingeben
+2. WLAN-Daten für die Kamera eingeben
 3. RTMP-URL eintragen (wird in der App angezeigt)
 4. **Verbinden** tippen → Kamera startet automatisch den Stream
 
