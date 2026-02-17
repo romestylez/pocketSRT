@@ -14,7 +14,7 @@ PocketSRT empfängt RTMP-Streams und sendet sie per SRT oder SRTLA weiter – di
 
 ---
 
-## 🔄 Wie funktioniert das?
+## 🔄 Wie funktioniert pocketSRT?
 
 ```
 DJI Kamera → (Bluetooth LE / RTMP) → PocketSRT → SRT(LA) → Streaming-Ziel
