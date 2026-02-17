@@ -1,8 +1,8 @@
-# 📡 PocketSRT
+# 📡 pocketSRT
 
 **Mobile SRT/SRTLA Streaming App mit eingebettetem RTMP-Server**
 
-PocketSRT empfängt RTMP-Streams und sendet sie per SRT oder SRTLA weiter – direkt vom Android-Handy, ohne externe Hardware. Jede Kamera oder Software die RTMP unterstützt kann als Quelle genutzt werden. DJI Kameras profitieren zusätzlich von einer nativen Auto-Connect Integration.
+pocketSRT empfängt RTMP-Streams und sendet sie per SRT oder SRTLA weiter – direkt vom Android-Handy, ohne externe Hardware. Jede Kamera oder Software die RTMP unterstützt kann als Quelle genutzt werden. DJI Kameras profitieren zusätzlich von einer nativen Auto-Connect Integration.
 
 ---
 
@@ -17,10 +17,16 @@ PocketSRT empfängt RTMP-Streams und sendet sie per SRT oder SRTLA weiter – di
 ## 🔄 Wie funktioniert pocketSRT?
 
 ```
-DJI Kamera → (Bluetooth LE / RTMP) → PocketSRT → SRT(LA) → Streaming-Ziel
+DJI Kamera → (Bluetooth LE / RTMP) → pocketSRT → SRT(LA) → Streaming-Ziel
 ```
 
-PocketSRT enthält einen eingebetteten RTMP-Server (Node.js). Die DJI Kamera streamt per RTMP an diesen Server, PocketSRT leitet den Stream dann als SRT oder SRTLA weiter.
+pocketSRT enthält einen eingebetteten RTMP-Server (Node.js). Die DJI Kamera streamt per RTMP an diesen Server, pocketSRT leitet den Stream dann als SRT oder SRTLA weiter.
+
+Die interne Pipeline:
+
+```
+DJI Kamera → RTMP → Node.js Server → FFmpeg (-c:v copy) → UDP lokal → srtdroid → SRT/SRTLA → Ziel
+```
 
 ---
 
@@ -39,7 +45,7 @@ Im **OUTPUT** Bereich:
 
 ### 2. Kamera / Quelle verbinden
 
-PocketSRT enthält einen eingebetteten RTMP-Server. Die **RTMP URL** wird direkt in der App angezeigt (z.B. `rtmp://192.168.1.100:1935/live/stream`).
+pocketSRT enthält einen eingebetteten RTMP-Server. Die **RTMP URL** wird direkt in der App angezeigt (z.B. `rtmp://192.168.1.100:1935/live/stream`).
 
 **Jede Quelle die RTMP unterstützt kann streamen:**
 - 📷 Actionkameras (DJI, GoPro, etc.)
@@ -72,10 +78,10 @@ SRTLA ist eine Erweiterung von SRT die mehrere Netzwerkpfade gleichzeitig nutzt.
 
 ### Nur ein Handy
 
-PocketSRT nutzt auf einem einzelnen Handy automatisch **WiFi und Mobilfunk gleichzeitig** als zwei getrennte Pfade – das allein verbessert bereits die Stabilität erheblich.
+pocketSRT nutzt auf einem einzelnen Handy automatisch **WiFi und Mobilfunk gleichzeitig** als zwei getrennte Pfade – das allein verbessert bereits die Stabilität erheblich.
 
 ```
-PocketSRT (ein Handy)
+pocketSRT (ein Handy)
   ├─ WiFi      → SRTLA Server
   └─ Mobilfunk → SRTLA Server
 ```
@@ -85,7 +91,7 @@ PocketSRT (ein Handy)
 Mit der kostenlosen [pocketBond](https://github.com/romestylez/pocketBond/) App können weitere Android-Handys als zusätzliche Bonding-Nodes eingebunden werden. Jedes Hilfs-Handy stellt seine eigene Mobilfunk-Verbindung zur Verfügung.
 
 ```
-PocketSRT (Haupt-Handy)
+pocketSRT (Haupt-Handy)
   ├─ WiFi             → SRTLA Server
   ├─ Mobilfunk        → SRTLA Server
   ├─ PocketBond Handy 2 (Telekom 5G)  → SRTLA Server
@@ -94,7 +100,7 @@ PocketSRT (Haupt-Handy)
 
 **PocketBond Setup:**
 1. PocketBond auf Hilfs-Handys installieren
-2. Gleiches Password wie in PocketSRT eingeben
+2. Gleiches Password wie in pocketSRT eingeben
 3. Alle Handys im selben WiFi → automatische Verbindung!
 4. Jedes Hilfs-Handy braucht einen aktiven Mobilfunk-Datentarif
 
@@ -111,7 +117,7 @@ PocketSRT (Haupt-Handy)
 
 ## 🎯 Kompatible SRTLA Server
 
-PocketSRT funktioniert mit Standard SRT(LA)-Servern, z.B.:
+pocketSRT funktioniert mit Standard SRT(LA)-Servern, z.B.:
 - [irl-srt-server](https://github.com/irlserver/irl-srt-server)
 - [srtla-live-server](https://github.com/OpenIRL/srt-live-server/)
 - Eigener Server
@@ -133,11 +139,11 @@ Dieses Projekt basiert auf großartigen Open-Source Projekten:
 
 | Projekt | Verwendung | Lizenz |
 |---|---|---|
-| [StreamPack](https://github.com/ThibaultBee/StreamPack) (Fork by [dimadesu](https://github.com/dimadesu/StreamPack)) | SRT/SRTLA Streaming | Apache 2.0 |
+| [ffmpeg-kit](https://github.com/arthenica/ffmpeg-kit) | RTMP→MPEG-TS Transcoding | LGPL 2.1 |
+| [srtdroid](https://github.com/ThibaultBee/srtdroid) | SRT/SRTLA Protokoll | Apache 2.0 |
 | [Moblin](https://github.com/eerimoq/moblin) | DJI BLE Protokoll | MIT |
 | [Node-Media-Server](https://github.com/illuspas/Node-Media-Server) | RTMP Server | MIT |
-| [LibRTMP](https://github.com/mcxinyu/LibRtmp-Client-for-Android) | RTMP Client | Apache 2.0 |
-| [srtdroid](https://github.com/ThibaultBee/srtdroid) | SRT Protokoll | Apache 2.0 |
+| [nodejs-mobile](https://github.com/nicktindall/nodejs-mobile) | Node.js auf Android | MIT |
 
 Vollständige Lizenzen: [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md)
 
@@ -145,7 +151,7 @@ Vollständige Lizenzen: [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md)
 
 ## ☕ Support
 
-Wenn dir PocketSRT gefällt:
+Wenn dir pocketSRT gefällt:
 
 - ☕ [Ko-fi](https://ko-fi.com/romestylez)
 - 🐙 [GitHub Sponsors](https://github.com/sponsors/romestylez)
