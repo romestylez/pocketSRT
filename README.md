@@ -82,7 +82,7 @@ PocketSRT (ein Handy)
 
 ### Mit PocketBond (mehrere Handys)
 
-Mit der kostenlosen **[PocketBond](https://github.com/yourusername/pocketbond)** App können weitere Android-Handys als zusätzliche Bonding-Nodes eingebunden werden. Jedes Hilfs-Handy stellt seine eigene Mobilfunk-Verbindung zur Verfügung.
+Mit der kostenlosen **[PocketBond]([https://github.com/yourusername/pocketbond](https://github.com/romestylez/pocketBond))** App können weitere Android-Handys als zusätzliche Bonding-Nodes eingebunden werden. Jedes Hilfs-Handy stellt seine eigene Mobilfunk-Verbindung zur Verfügung.
 
 ```
 PocketSRT (Haupt-Handy)
