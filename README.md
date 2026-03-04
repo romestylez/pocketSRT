@@ -144,6 +144,7 @@ Dieses Projekt basiert auf großartigen Open-Source Projekten:
 | [srtdroid](https://github.com/ThibaultBee/srtdroid) | SRT/SRTLA Protokoll | Apache 2.0 |
 | [Moblin](https://github.com/eerimoq/moblin) | DJI BLE Protokoll | MIT |
 | [Node-Media-Server](https://github.com/illuspas/Node-Media-Server) | RTMP Server | MIT |
+| [MediaSrvr](https://github.com/dimadesu/MediaSrvr) | RTMP Server | MIT |
 | [nodejs-mobile](https://github.com/nicktindall/nodejs-mobile) | Node.js auf Android | MIT |
 
 Vollständige Lizenzen: [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md)
