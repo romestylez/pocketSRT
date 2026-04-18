@@ -125,15 +125,6 @@ pocketSRT funktioniert mit Standard SRT(LA)-Servern, z.B.:
 
 ---
 
-## 🚀 Roadmap
-
-- 🔜 Weitere DJI Kamera Modelle
-- 🔜 GoPro Support
-- 🔜 Statistiken Dashboard
-- 🔜 QR-Code Pairing für PocketBond
-
----
-
 ## 🙏 Credits
 
 Dieses Projekt basiert auf großartigen Open-Source Projekten:
