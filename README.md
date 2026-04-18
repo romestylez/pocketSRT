@@ -10,7 +10,7 @@ pocketSRT empfängt RTMP-Streams und sendet sie per SRT oder SRTLA weiter – di
 
 👉 [Neueste Version (APK)](../../releases/latest)
 
-> **Android 8.0+** erforderlich · DJI Auto-Connect getestet mit Osmo Action 4
+> **Android 8.0+** erforderlich · DJI Auto-Connect getestet mit Osmo Action 3/4/6 und Osmo Pocket 3
 
 ---
 
