@@ -25,7 +25,7 @@ pocketSRT enthält einen eingebetteten RTMP-Server (Node.js). Die DJI Kamera str
 Die interne Pipeline:
 
 ```
-DJI Kamera → RTMP → Node.js Server → FFmpeg (-c:v copy) → UDP lokal → srtdroid → SRT/SRTLA → Ziel
+DJI Kamera → RTMP → Node.js Server → FFmpeg → MediaCodec → MPEG-TS → SRT/SRTLA → Ziel
 ```
 
 ---
