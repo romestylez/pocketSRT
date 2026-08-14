@@ -89,11 +89,11 @@ Für einen stabilen PiP-Betrieb werden H.264/SDR, 720p und 25 oder 30 fps für d
 
 ## BlackShark-Kühler
 
-pocketSRT kann unterstützte Black-Shark-MagCooler per Bluetooth LE steuern. Die Einrichtung befindet sich unter **Menü → BlackShark**.
+pocketSRT kann unterstützte Black-Shark-Kühler per Bluetooth LE steuern. Die Einrichtung befindet sich unter **Menü → BlackShark**.
 
 - **MagCooler 4 Pro:** Kühlleistung und Lüftersteuerung
 - **MagCooler 5 Pro:** fünf Intensitätsstufen und LED-Steuerung
-- **MagCooler 6:** Normal-/Silent-Modus und LED-Steuerung
+- **FunCooler 6:** Normal-/Silent-Modus und LED-Steuerung
 - Automatisches Ein- und Ausschalten anhand frei wählbarer Start- und Stopptemperatur
 - Anzeige der aktuellen Gerätetemperatur sowie des Verbindungs- und Automatikstatus
 - Manuelles Ein- und Ausschalten, wenn die Temperaturautomatik deaktiviert ist
@@ -125,7 +125,7 @@ Die Startseite zeigt den Status des RTMP-Eingangs, des SRT/SRTLA-Ausgangs und de
 | [AndroidX Media3](https://github.com/androidx/media) | ExoPlayer-basierter FLV/RTMP-Ingest, Decoder und Wiedergabezeitachse | Apache-2.0 |
 | [Moblin](https://github.com/eerimoq/moblin) | Referenz und übertragene Logik für DJI BLE, SRTLA, adaptive Bitrate und nativen RTMP-Ingest | MIT |
 | [HaishinKit](https://github.com/HaishinKit/HaishinKit.swift) | Referenz für Teile der nativen RTMP-Protokollimplementierung | BSD-3-Clause |
-| [BlackSharkLib.swift](https://github.com/Spillmaker/BlackSharkLib.swift) | Referenz für das BLE-Protokoll unterstützter Black-Shark-Kühler | MIT |
+| [romestylez/BlackSharkLib.swift](https://github.com/romestylez/BlackSharkLib.swift) | BLE-Protokollreferenz; Fork von [Spillmakers Original](https://github.com/Spillmaker/BlackSharkLib.swift) mit zusätzlicher, hardwaregeprüfter Unterstützung für den FunCooler 6 | MIT |
 
 Weitere Abhängigkeiten und Lizenzhinweise stehen in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
 
