@@ -1,155 +1,135 @@
-# 📡 pocketSRT
+# pocketSRT
 
-**Mobile SRT/SRTLA Streaming App mit eingebettetem RTMP-Server**
+**Mobile RTMP-zu-SRT/SRTLA-Bridge für Android – mit SRTLA-Bonding, adaptiver Bitrate, DJI-Auto-Connect und synchronisiertem Picture-in-Picture.**
 
-pocketSRT empfängt RTMP-Streams und sendet sie per SRT oder SRTLA weiter – direkt vom Android-Handy, ohne externe Hardware. Jede Kamera oder Software die RTMP unterstützt kann als Quelle genutzt werden. DJI Kameras profitieren zusätzlich von einer nativen Auto-Connect Integration.
+pocketSRT empfängt RTMP-Streams von Kameras oder Streaming-Software und sendet das Programm als SRT oder SRTLA weiter. Der RTMP-Ingest läuft nativ auf dem Android-Gerät; Node.js, FFmpeg und externe Streaming-Hardware werden nicht benötigt.
 
----
+## Download
 
-## 📥 Download
+[Neueste Version als APK herunterladen](https://github.com/romestylez/pocketSRT/releases/latest)
 
-👉 [Neueste Version (APK)](../../releases/latest)
+> Die README beschreibt den aktuellen Stand von **pocketSRT 5.0.0**. Unter „Neueste Version“ liegt immer die zuletzt veröffentlichte APK; bis zum nächsten Release kann diese noch eine ältere Versionsnummer tragen.
 
-> **Android 8.0+** erforderlich · DJI Auto-Connect getestet mit Osmo Action 3/4/6 und Osmo Pocket 3
+Erfordert Android 8.0 oder neuer und ein 64-Bit-ARM-Gerät (`arm64-v8a`). Die DJI-Integration erkennt Osmo Action 2, 3, 4, 5 Pro und 6, Osmo 360 sowie Osmo Pocket 3.
 
----
+## Funktionen
 
-## 🔄 Wie funktioniert pocketSRT?
+- Nativer RTMP-Server für Actionkameras, Camcorder, OBS und andere RTMP-Quellen
+- SRT- und SRTLA-Ausgang mit adaptiver Bitratensteuerung
+- SRTLA-Bonding über Mobilfunk, WLAN, Ethernet und zusätzliche [pocketBond](https://github.com/romestylez/pocketBond/)-Handys
+- DJI-Auto-Connect per Bluetooth LE für unterstützte DJI-Kameras
+- Synchronisiertes Picture-in-Picture mit einer zweiten RTMP-Quelle
+- Wechsel von Main und PiP im laufenden Stream, einschließlich Programmton
+- Vier frei wählbare Bild-/Ton-Szenen: Main/Main-Ton, Main/PiP-Ton, PiP/Main-Ton und PiP/PiP-Ton
+- Einstellbare PiP-Synchronisierung, Position, Größe und 16:9-/9:16-Layout
+- Optionale Steuerung unterstützter Black-Shark-Smartphone-Kühler
+- Lokale REST API für Status, Steuerung und Telemetrie
+- Live-Status, Bitratenanzeige und exportierbare Diagnose-Logs
 
+## Screenshots
+
+<p align="center">
+  <img src="screenshots/pocketsrt-ready.png" alt="pocketSRT 5.0.0 bereit zum Streamen" width="47%">
+  <img src="screenshots/pocketsrt-live.png" alt="pocketSRT 5.0.0 während eines SRTLA-Streams" width="47%">
+</p>
+
+## Signalweg
+
+```text
+Kamera / OBS ──RTMP──> nativer RTMP-Ingest ──> Media3 / MediaCodec
+                                              │
+                                              └──> MPEG-TS ──SRT/SRTLA──> Streaming-Ziel
 ```
-DJI Kamera → (Bluetooth LE / RTMP) → pocketSRT → SRT(LA) → Streaming-Ziel
+
+Für PiP kommt eine zweite RTMP-Quelle hinzu:
+
+```text
+Main: rtmp://<handy-ip>:1935/live/stream ─┐
+                                         ├──> synchronisiertes Programm ──> SRT/SRTLA
+PiP:  rtmp://<handy-ip>:1935/live/pip ────┘
 ```
 
-pocketSRT enthält einen eingebetteten RTMP-Server (Node.js). Die DJI Kamera streamt per RTMP an diesen Server, pocketSRT leitet den Stream dann als SRT oder SRTLA weiter.
+## Schnellstart
 
-Die interne Pipeline:
+### 1. Ausgang einrichten
 
-```
-DJI Kamera → RTMP → Node.js Server → FFmpeg → MediaCodec → MPEG-TS → SRT/SRTLA → Ziel
-```
+Im Bereich **Output**:
 
----
+1. `SRT` oder `SRTLA` auswählen.
+2. Ziel-URL eintragen, zum Beispiel:
 
-## ⚡ Schnellstart
+   ```text
+   srt://dein-server.com:5000?streamid=dein-key
+   srtla://dein-server.com:5000?streamid=dein-key
+   ```
 
-### 1. SRT / SRTLA Ziel eingeben
+3. Optional eine maximale Bitrate in kbit/s festlegen.
 
-Im **OUTPUT** Bereich:
-- **Protokoll** wählen: `SRT` oder `SRTLA`
-- **Ziel-URL** eingeben:
-  ```
-  srt://dein-server.com:5000?streamid=dein-key
-  srtla://dein-server.com:5000?streamid=dein-key
-  ```
-- Optional: **Max. Bitrate** in kbps setzen (leer = unbegrenzt)
+### 2. Hauptquelle verbinden
 
-### 2. Kamera / Quelle verbinden
+Die App zeigt die passende RTMP-Adresse für das aktuelle Netzwerk an. Diese Adresse als Streaming-Ziel in der Kamera oder Software eintragen und den RTMP-Stream starten.
 
-pocketSRT enthält einen eingebetteten RTMP-Server. Die **RTMP URL** wird direkt in der App angezeigt (z.B. `rtmp://192.168.1.100:1935/live/stream`).
-
-**Jede Quelle die RTMP unterstützt kann streamen:**
-- 📷 Actionkameras (DJI, GoPro, etc.)
-- 🎥 Camcorder mit RTMP Support
-- 💻 OBS / Streaming Software
-- 📱 Andere Streaming Apps
-
-**Option A – DJI Auto-Connect (empfohlen für DJI Kameras):**
-1. Menü (☰) → **DJI Settings** öffnen
-2. WLAN-Daten für die Kamera eingeben
-3. RTMP-URL eintragen (wird in der App angezeigt)
-4. **Verbinden** tippen → Kamera startet automatisch den Stream
-
-**Option B – Manuell per RTMP:**
-- Kamera/Software auf RTMP-Streaming konfigurieren
-- Die in der App angezeigte **RTMP URL** als Ziel eintragen
-- Verbindung starten
+Für DJI-Kameras kann unter **Menü → DJI Settings** WLAN, RTMP-Ziel und Auto-Start eingerichtet werden. pocketSRT konfiguriert und startet die Kamera anschließend per Bluetooth LE.
 
 ### 3. Stream starten
 
-- **STREAM STARTEN** tippen
-- Der grüne Punkt bei OUTPUT zeigt eine aktive Verbindung
-- Bitrate wird in Echtzeit angezeigt
+Sobald die Hauptquelle sendet, **Stream starten** antippen. Verbindungsstatus, aktive Bonding-Pfade und Ausgangsbitrate werden auf der Startseite angezeigt.
 
----
+## Picture-in-Picture
 
-## 🌐 SRTLA – Bonding mit mehreren Verbindungen
+PiP gehört in Version 5.0.0 zum Media3-/ExoPlayer-Ingest:
 
-SRTLA ist eine Erweiterung von SRT die mehrere Netzwerkpfade gleichzeitig nutzt. Das erhöht die Stabilität und Bandbreite.
+1. Unter **Menü → PiP** die Option **PiP aktivieren** einschalten.
+2. Die zweite Quelle an die dort angezeigte PiP-Adresse (`/live/pip`) senden lassen.
+3. Den Stream neu starten, damit die geänderte PiP-Konfiguration aktiv wird.
 
-### Nur ein Handy
+Main und PiP können während des Streams unabhängig als Bild- und Tonquelle gewählt werden. Die vier Szenen **Main · Main-Ton**, **Main · PiP-Ton**, **PiP · Main-Ton** und **PiP · PiP-Ton** schalten Bild und Programmton gemeinsam auf derselben Zeitachse. Die PiP-Einstellungen erlauben außerdem einen manuellen Synchronisationsversatz, weiche Rollenwechsel sowie Änderungen an Position, Größe, Drehung, Rahmen und Seitenverhältnis.
 
-pocketSRT nutzt auf einem einzelnen Handy automatisch **WiFi und Mobilfunk gleichzeitig** als zwei getrennte Pfade – das allein verbessert bereits die Stabilität erheblich.
+Für einen stabilen PiP-Betrieb werden H.264/SDR, 720p und 25 oder 30 fps für die zweite Quelle empfohlen.
 
-```
-pocketSRT (ein Handy)
-  ├─ WiFi      → SRTLA Server
-  └─ Mobilfunk → SRTLA Server
-```
+## BlackShark-Kühler
 
-### Mit PocketBond (mehrere Handys)
+pocketSRT kann unterstützte Black-Shark-MagCooler per Bluetooth LE steuern. Die Einrichtung befindet sich unter **Menü → BlackShark**.
 
-Mit der kostenlosen [pocketBond](https://github.com/romestylez/pocketBond/) App können weitere Android-Handys als zusätzliche Bonding-Nodes eingebunden werden. Jedes Hilfs-Handy stellt seine eigene Mobilfunk-Verbindung zur Verfügung.
+- **MagCooler 4 Pro:** Kühlleistung und Lüftersteuerung
+- **MagCooler 5 Pro:** fünf Intensitätsstufen und LED-Steuerung
+- **MagCooler 6:** Normal-/Silent-Modus und LED-Steuerung
+- Automatisches Ein- und Ausschalten anhand frei wählbarer Start- und Stopptemperatur
+- Anzeige der aktuellen Gerätetemperatur sowie des Verbindungs- und Automatikstatus
+- Manuelles Ein- und Ausschalten, wenn die Temperaturautomatik deaktiviert ist
 
-```
-pocketSRT (Haupt-Handy)
-  ├─ WiFi             → SRTLA Server
-  ├─ Mobilfunk        → SRTLA Server
-  ├─ PocketBond Handy 2 (Telekom 5G)  → SRTLA Server
-  └─ PocketBond Handy 3 (Vodafone 4G) → SRTLA Server
-```
+Die getrennten Start- und Stopptemperaturen bilden eine Hysterese und verhindern dadurch ständiges Ein- und Ausschalten nahe der Grenztemperatur. Die MagCooler-5-Pro-Protokollunterstützung ist implementiert, benötigt in pocketSRT aber noch die abschließende Prüfung mit echter Hardware.
 
-**PocketBond Setup:**
-1. PocketBond auf Hilfs-Handys installieren
-2. Gleiches Password wie in pocketSRT eingeben
-3. Alle Handys im selben WiFi → automatische Verbindung!
-4. Jedes Hilfs-Handy braucht einen aktiven Mobilfunk-Datentarif
+## SRTLA und pocketBond
 
----
+SRTLA verteilt den Stream über mehrere Netzwerkpfade. pocketSRT kann auf einem Gerät Mobilfunk, WLAN und Ethernet als getrennte Pfade verwenden.
 
-## 📊 Monitoring & Logs
+Zusätzliche Android-Handys lassen sich mit [pocketBond](https://github.com/romestylez/pocketBond/) als weitere Mobilfunkpfade einbinden:
 
-- **Grüner Punkt** = Verbindung aktiv
-- **Roter Punkt** = nicht verbunden
-- **Bitrate** wird live angezeigt
-- **Menü (☰) → Log** öffnet den vollständigen Log inkl. Export-Funktion (hilfreich für Fehleranalyse)
+1. pocketBond auf den Hilfs-Handys installieren.
+2. In pocketSRT und pocketBond dasselbe Passwort eintragen.
+3. Alle Geräte mit demselben lokalen WLAN verbinden.
+4. Auf jedem Hilfs-Handy einen aktiven Mobilfunk-Datentarif bereitstellen.
 
----
+Wenn die Kamera ein WLAN ohne Internet bereitstellt, kann je nach Android-Gerät die Entwickleroption **Mobile Daten immer aktiv** oder ein zusätzlicher Ethernet-Uplink erforderlich sein.
 
-## 🎯 Kompatible SRT(LA) Server
+## Monitoring und Logs
 
-pocketSRT funktioniert mit Standard SRT(LA)-Servern, z.B.:
-- [irl-srt-server](https://github.com/irlserver/irl-srt-server)
-- [srt-live-server](https://github.com/OpenIRL/srt-live-server/)
-- [srtla-receiver](https://github.com/OpenIRL/srtla-receiver)
-- Eigener Server
+Die Startseite zeigt den Status des RTMP-Eingangs, des SRT/SRTLA-Ausgangs und der einzelnen Bonding-Pfade sowie deren aktuelle Datenrate. Unter **Menü → Log** stehen ausführliche Diagnoseinformationen und der Log-Export zur Verfügung.
 
----
+## Credits
 
-## 🙏 Credits
-
-Dieses Projekt basiert auf großartigen Open-Source Projekten:
-
-| Projekt | Verwendung | Lizenz |
+| Projekt | Verwendung in pocketSRT | Lizenz |
 |---|---|---|
-| [ffmpeg-kit](https://github.com/arthenica/ffmpeg-kit) | RTMP→MPEG-TS Transcoding | LGPL 2.1 |
-| [srtdroid](https://github.com/ThibaultBee/srtdroid) | SRT/SRTLA Protokoll | Apache 2.0 |
-| [Moblin](https://github.com/eerimoq/moblin) | DJI BLE Protokoll | MIT |
-| [MediaSrvr](https://github.com/dimadesu/MediaSrvr) | RTMP Server | MIT |
-| [nodejs-mobile](https://github.com/nicktindall/nodejs-mobile) | Node.js auf Android | MIT |
+| [srtdroid](https://github.com/ThibaultBee/srtdroid) | SRT-Protokoll und SRT-Ausgang | Apache-2.0 |
+| [AndroidX Media3](https://github.com/androidx/media) | ExoPlayer-basierter FLV/RTMP-Ingest, Decoder und Wiedergabezeitachse | Apache-2.0 |
+| [Moblin](https://github.com/eerimoq/moblin) | Referenz und übertragene Logik für DJI BLE, SRTLA, adaptive Bitrate und nativen RTMP-Ingest | MIT |
+| [HaishinKit](https://github.com/HaishinKit/HaishinKit.swift) | Referenz für Teile der nativen RTMP-Protokollimplementierung | BSD-3-Clause |
+| [BlackSharkLib.swift](https://github.com/Spillmaker/BlackSharkLib.swift) | Referenz für das BLE-Protokoll unterstützter Black-Shark-Kühler | MIT |
 
-Vollständige Lizenzen: [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md)
+Weitere Abhängigkeiten und Lizenzhinweise stehen in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
 
----
+## Support
 
-## ☕ Support
-
-Wenn dir pocketSRT gefällt:
-
-- ☕ [Ko-fi](https://ko-fi.com/romestylez)
-- 🐙 [GitHub Sponsors](https://github.com/sponsors/romestylez)
-
----
-
-## 📄 Lizenz
-
-Apache License 2.0 – siehe [LICENSE](LICENSE)
+- [Ko-fi](https://ko-fi.com/romestylez)
+- [GitHub Sponsors](https://github.com/sponsors/romestylez)

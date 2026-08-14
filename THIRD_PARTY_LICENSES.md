@@ -1,151 +1,44 @@
-# Third-Party Licenses
+# Third-party licenses and notices
 
-This project uses the following open-source libraries and components:
+This document identifies the principal open-source libraries and reference implementations used by pocketSRT 5.0.0. The linked upstream license files contain the complete license terms.
 
----
+## Runtime dependencies
 
-## ffmpeg-kit
+| Component | Version | Purpose | License |
+|---|---:|---|---|
+| [srtdroid](https://github.com/ThibaultBee/srtdroid) | 1.9.5 | SRT protocol implementation and output transport | [Apache-2.0](https://github.com/ThibaultBee/srtdroid/blob/main/LICENSE.md) |
+| [AndroidX Media3](https://github.com/androidx/media) | 1.6.1 | ExoPlayer-based FLV/RTMP ingest, decoding and playback clock | [Apache-2.0](https://github.com/androidx/media/blob/release/LICENSE) |
+| [OkHttp](https://github.com/lysine-dev/okhttp) | 4.12.0 | Networking for the pocketBond/Moblink helper service | [Apache-2.0](https://github.com/lysine-dev/okhttp/blob/parent-4.12.0/LICENSE.txt) |
+| [Kotlinx Serialization](https://github.com/Kotlin/kotlinx.serialization) | 1.7.3 | JSON serialization for the helper service and local API | [Apache-2.0](https://github.com/Kotlin/kotlinx.serialization/blob/master/LICENSE.txt) |
+| [Kotlinx Coroutines](https://github.com/Kotlin/kotlinx.coroutines) | 1.9.0 | Android asynchronous runtime | [Apache-2.0](https://github.com/Kotlin/kotlinx.coroutines/blob/master/LICENSE.txt) |
 
-**Project:** https://github.com/arthenica/ffmpeg-kit  
-**Version:** 6.0-2.LTS  
-**License:** LGPL 2.1  
-**Purpose:** RTMP input → MPEG-TS muxing and stream processing on Android
+pocketSRT also uses AndroidX, Kotlin and Material Components libraries distributed under the Apache License 2.0.
 
-```
-FFmpegKit is licensed under the GNU Lesser General Public License v2.1.
-FFmpeg is licensed under LGPL v2.1+ or GPL v2+ depending on configuration.
+## Adapted and reference implementations
 
-See https://github.com/arthenica/ffmpeg-kit/blob/main/LICENSE for details.
-```
+### Moblin
 
----
+- Project: [eerimoq/moblin](https://github.com/eerimoq/moblin)
+- Use: DJI BLE protocol, SRTLA client/scheduler behavior, adaptive-bitrate behavior, and reference for the native RTMP ingest
+- License: [MIT](https://github.com/eerimoq/moblin/blob/main/LICENSE)
+- Copyright: © 2023 Erik Moqvist
 
-## srtdroid
+### HaishinKit
 
-**Project:** https://github.com/ThibaultBee/srtdroid  
-**Version:** 1.9.5  
-**License:** Apache License 2.0  
-**Purpose:** SRT protocol implementation for Android (UDP→SRT relay)
+- Project: [HaishinKit/HaishinKit.swift](https://github.com/HaishinKit/HaishinKit.swift)
+- Use: reference for parts of the native RTMP protocol implementation through Moblin's modified HaishinKit components
+- License: [BSD-3-Clause](https://github.com/HaishinKit/HaishinKit.swift/blob/main/LICENSE.md)
+- Copyright: © 2015 shogo4405
 
-```
-Copyright 2021-2024 Thibault B.
+### BlackSharkLib.swift
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+- Project: [Spillmaker/BlackSharkLib.swift](https://github.com/Spillmaker/BlackSharkLib.swift)
+- Use: reference for the BLE protocol of supported Black Shark MagCooler devices
+- License: [MIT](https://github.com/Spillmaker/BlackSharkLib.swift/blob/main/LICENSE)
+- Copyright: © 2025 Spillmaker
 
-    http://www.apache.org/licenses/LICENSE-2.0
-```
+## License texts
 
----
-
-## Node Media Server
-
-**Project:** https://github.com/illuspas/Node-Media-Server  
-**Version:** 2.7.0  
-**License:** MIT License  
-**Purpose:** Embedded RTMP media server for receiving camera streams
-
-```
-MIT License
-
-Copyright (c) 2017-2024 illuspas
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
-
----
-
-## DJI BLE Protocol (from Moblin)
-
-**Project:** https://github.com/eerimoq/moblin  
-**License:** MIT License  
-**Purpose:** Bluetooth Low Energy communication protocol for DJI cameras
-
-```
-MIT License
-
-Copyright (c) 2024 Erik Moqvist
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
-
----
-
-## Node.js (via nodejs-mobile)
-
-**Project:** https://nodejs.org / https://github.com/nicktindall/nodejs-mobile  
-**License:** MIT License  
-**Purpose:** JavaScript runtime embedded in Android app
-
-```
-Copyright Node.js contributors. All rights reserved.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to
-deal in the Software without restriction, including without limitation the
-rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
-sell copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-IN THE SOFTWARE.
-```
-
----
-
-## Additional Android Libraries
-
-- **AndroidX Libraries** – Apache License 2.0
-- **Kotlin** – Apache License 2.0
-- **Material Components** – Apache License 2.0
-- **OkHttp** – Apache License 2.0
-- **Kotlinx Serialization** – Apache License 2.0
-
-All Android/Google libraries used are licensed under Apache License 2.0.
-
----
-
-For the full text of the Apache License 2.0, see: http://www.apache.org/licenses/LICENSE-2.0  
-For the full text of the MIT License, see: https://opensource.org/licenses/MIT  
-For the full text of the LGPL 2.1, see: https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+- [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+- [MIT License](https://opensource.org/license/mit)
+- [BSD 3-Clause License](https://opensource.org/license/bsd-3-clause)
