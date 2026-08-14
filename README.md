@@ -28,10 +28,7 @@ Erfordert Android 8.0 oder neuer und ein 64-Bit-ARM-Gerät (`arm64-v8a`). Die DJ
 
 ## Screenshots
 
-<p align="center">
-  <img src="screenshots/pocketsrt-ready.png" alt="pocketSRT 5.0.0 bereit zum Streamen" width="47%">
-  <img src="screenshots/pocketsrt-live.png" alt="pocketSRT 5.0.0 während eines SRTLA-Streams" width="47%">
-</p>
+
 
 ## Signalweg
 
