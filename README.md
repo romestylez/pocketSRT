@@ -14,12 +14,12 @@ Erfordert Android 8.0 oder neuer und ein 64-Bit-ARM-Gerät (`arm64-v8a`). Die DJ
 
 ## Funktionen
 
-- Nativer RTMP-Server für Actionkameras, Camcorder, OBS und andere RTMP-Quellen
+- Nativer RTMP-Server für Actionkameras, OBS und andere RTMP-Quellen
 - SRT- und SRTLA-Ausgang mit adaptiver Bitratensteuerung
 - SRTLA-Bonding über Mobilfunk, WLAN, Ethernet und zusätzliche [pocketBond](https://github.com/romestylez/pocketBond/)-Handys
 - DJI-Auto-Connect per Bluetooth LE für unterstützte DJI-Kameras
 - Synchronisiertes Picture-in-Picture mit einer zweiten RTMP-Quelle
-- Wechsel von Main und PiP im laufenden Stream, einschließlich Programmton
+- Wechsel von Main und PiP im laufenden Stream mit Ton
 - Vier frei wählbare Bild-/Ton-Szenen: Main/Main-Ton, Main/PiP-Ton, PiP/Main-Ton und PiP/PiP-Ton
 - Einstellbare PiP-Synchronisierung, Position, Größe und 16:9-/9:16-Layout
 - Optionale Steuerung unterstützter Black-Shark-Smartphone-Kühler
@@ -51,9 +51,9 @@ PiP:  rtmp://<handy-ip>:1935/live/pip ────┘
 
 ## Schnellstart
 
-### 1. Ausgang einrichten
+### 1. Streaming-Ziel eintragen
 
-Im Bereich **Output**:
+Unter **Menü → Stream**:
 
 1. `SRT` oder `SRTLA` auswählen.
 2. Ziel-URL eintragen, zum Beispiel:
@@ -83,7 +83,7 @@ PiP gehört in Version 5.0.0 zum Media3-/ExoPlayer-Ingest:
 2. Die zweite Quelle an die dort angezeigte PiP-Adresse (`/live/pip`) senden lassen.
 3. Den Stream neu starten, damit die geänderte PiP-Konfiguration aktiv wird.
 
-Main und PiP können während des Streams unabhängig als Bild- und Tonquelle gewählt werden. Die vier Szenen **Main · Main-Ton**, **Main · PiP-Ton**, **PiP · Main-Ton** und **PiP · PiP-Ton** schalten Bild und Programmton gemeinsam auf derselben Zeitachse. Die PiP-Einstellungen erlauben außerdem einen manuellen Synchronisationsversatz, weiche Rollenwechsel sowie Änderungen an Position, Größe, Drehung, Rahmen und Seitenverhältnis.
+Main und PiP können während des Streams unabhängig als Bild- und Tonquelle gewählt werden. Die vier Szenen **Main · Main-Ton**, **Main · PiP-Ton**, **PiP · Main-Ton** und **PiP · PiP-Ton** schalten Bild und Ton gemeinsam auf derselben Zeitachse. Die PiP-Einstellungen erlauben außerdem einen manuellen Synchronisationsversatz, weiche Rollenwechsel sowie Änderungen an Position, Größe, Drehung, Rahmen und Seitenverhältnis.
 
 Für einen stabilen PiP-Betrieb werden H.264/SDR, 720p und 25 oder 30 fps für die zweite Quelle empfohlen.
 
